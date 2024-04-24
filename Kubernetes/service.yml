@@ -1,14 +1,18 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: netflix-app
+  name: netflix-original
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: external 
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
   labels:
-    app: netflix-app
+    app: netflix-original
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 80
-    nodePort: 30007
+    name: http
   selector:
-    app: netflix-app
+    app: netflix-original
